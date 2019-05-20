@@ -8,4 +8,9 @@ escoger<-function(persona1,valores,cortes){
   }
   return(a)
 }
+#examples
+proporciones<-c(4,2)
+valores<-c(4,8)
+cortes<-c(1,5,10)
 
+escoger(1,valores,cortes)
