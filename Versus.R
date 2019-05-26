@@ -5,7 +5,7 @@ Versus<-function(df,var1=names(df)[1],var2=names(df)[2],
   #Si dsc == T entonces v<-table()... en lugar de numeros
   #Si cualquier variable tiene un solo valor pierde el entido y brea
   
-  ifelse(length(unique(df[,var1]))>20,quit(),"")
+  ifelse(length(unique(df[,var1]))>20,break(),"")
   #si es un factor volverla n?mero
   #ifelse(class(df[,var1]) | length(unique(df[,var1]))>50,,)
   #minmax=c(0,1)
