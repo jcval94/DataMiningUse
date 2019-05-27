@@ -1,13 +1,13 @@
 library(ggplot2)
 
 Versus<-function(df,var1=names(df)[1],var2=names(df)[2],
-                 minmax=NULL,plot=TRUE,disc=TRUE){
+                 minmax=NULL,plot=TRUE,disc=TRUE,min.disc=20,max.cont=500){
   #Una de las vaiables debe ser cont. y la otra disc.
   
   #Si dsc == T entonces v<-table()... en lugar de numeros
   #Si cualquier variable tiene un solo valor pierde el entido y brea
   
-  ifelse(length(unique(df[,var1]))>20,break(),"")
+  ifelse(length(unique(df[,var1]))>min.disc,break(),"")
   #si es un factor volverla número
   #ifelse(class(df[,var1]) | length(unique(df[,var1]))>50,,)
   #minmax=c(0,1)
@@ -15,7 +15,7 @@ Versus<-function(df,var1=names(df)[1],var2=names(df)[2],
   ifelse(is.null(minmax),c(minimo<-min(a),maximo<-max(a))
          ,c(minimo<-minmax[1],maximo<-minmax[2]))
   
-  if(length(unique(df[,var2]))>500){
+  if(length(unique(df[,var2]))>max.cont){
     v<-as.data.frame(table(cut(df[,var2],seq(minimo, maximo, length.out=100),include.lowest = T),
                            df[,var1]))
   }else{
