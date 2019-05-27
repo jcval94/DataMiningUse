@@ -50,9 +50,12 @@ Versus<-function(df,var1=names(df)[1],var2=names(df)[2],
     
     names(df)[1]<-"var1"
     names(df)[2]<-"var2"
-    plot_1<-ggplot(df,aes(var2))+geom_density(aes(fill=var1),alpha=.7)
-    plot_1
-    
+    #plot_1<-ggplot(df,aes(var2))+geom_density(aes(fill=var1),alpha=.7)
+    theme_set(theme_bw())
+    plot_2<-ggplot(df,aes(var1,var2))+
+      geom_violin(aes(fill=var1))+
+      geom_boxplot(width = 0.2)
+    plot_2
   }
   return(porcent)
 }
