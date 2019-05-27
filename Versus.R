@@ -3,6 +3,10 @@ library(ggplot2)
 Versus<-function(df,var1=names(df)[1],var2=names(df)[2],
                  minmax=NULL,plot=TRUE,disc=TRUE,min.disc=20,max.cont=500){
   #Una de las vaiables debe ser cont. y la otra disc.
+  NV1<-is.numeric(var1)
+  NV2<-is.numeric(var2)
+  FV1<-is.factor(var1)
+  FV2<-is.factor(var2)
   
   #Si dsc == T entonces v<-table()... en lugar de numeros
   #Si cualquier variable tiene un solo valor pierde el entido y brea
@@ -12,9 +16,13 @@ Versus<-function(df,var1=names(df)[1],var2=names(df)[2],
   #ifelse(class(df[,var1]) | length(unique(df[,var1]))>50,,)
   #minmax=c(0,1)
   a<-df[,var2]
-  ifelse(is.null(minmax),c(minimo<-min(a),maximo<-max(a))
-         ,c(minimo<-minmax[1],maximo<-minmax[2]))
-  
+  if(is.null(minmax)){
+    minimo<-min(a)
+    maximo<-max(a)
+  }else{       
+    minimo<-minmax[1]
+    maximo<-minmax[2]
+  }
   if(length(unique(df[,var2]))>max.cont){
     v<-as.data.frame(table(cut(df[,var2],seq(minimo, maximo, length.out=100),include.lowest = T),
                            df[,var1]))
@@ -45,8 +53,7 @@ Versus<-function(df,var1=names(df)[1],var2=names(df)[2],
   porcent<-cbind(porcent,proporciones)
   names(porcent)[1] <- paste("Intervalo",var2,"")
   
-  
-  if(plot==T){
+  if(plot){
     
     names(df)[1]<-"var1"
     names(df)[2]<-"var2"
