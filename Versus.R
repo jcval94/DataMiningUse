@@ -3,15 +3,24 @@ library(ggplot2)
 Versus<-function(df,var1=names(df)[1],var2=names(df)[2],
                  minmax=NULL,plot=TRUE,disc=TRUE,min.disc=20,max.cont=500){
   #Una de las vaiables debe ser cont. y la otra disc.
-  NV1<-is.numeric(var1)
-  NV2<-is.numeric(var2)
-  FV1<-is.factor(var1)
-  FV2<-is.factor(var2)
+  NV1<-is.numeric(var1); NV2<-is.numeric(var2)
+  FV1<-is.factor(var1); FV2<-is.factor(var2)
   
   #Si dsc == T entonces v<-table()... en lugar de numeros
   #Si cualquier variable tiene un solo valor pierde el entido y brea
   
-  ifelse(length(unique(df[,var1]))>min.disc,break(),"")
+  if(length(unique(df[,var1]))>min.disc){
+    break()
+  }
+  if(NV1 & NV2){#Ambos números
+    
+  }
+  else if((!NV1) & (!NV2)){#Ambos factores
+    
+  }else{
+    
+  }
+  
   #si es un factor volverla número
   #ifelse(class(df[,var1]) | length(unique(df[,var1]))>50,,)
   #minmax=c(0,1)
