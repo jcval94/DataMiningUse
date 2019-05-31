@@ -64,3 +64,12 @@ Max_Pointer<-function(df,clasif,date,medida){
   Alerta[[4]]<-round(Porcent_aumento,3)
   Alerta
 }
+
+#A data frame with a date variable
+#data(iris)
+
+library(timeSeries)
+data(LPP2005REC)
+
+Max_Pointer(df=LPP2005REC,clasif,date,medida)
+
