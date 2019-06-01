@@ -31,7 +31,7 @@ Max_Pointer<-function(df,clasif,date,medida){
   muestra_server$Semana<-muestra_server[[date]]-as.numeric(muestra_server[[date]])%%7
   muestra_server<-muestra_server[muestra_server$Semana>(min(df[[date]])-1),]
   
-  Semana_server<-purrr::map(c(mean,max),~dcast(muestra_server,formula(paste0("Semana~",date)),.x,value.var=medida))
+  Semana_server<-purrr::map(c(mean,max),~reshape2::dcast(muestra_server,formula(paste0("Semana~",date)),.x,value.var=medida))
   Semana_server.0<-Semana_server[[2]][,-1]/Semana_server[[1]][,-1]
   Semana_server.0$Semana<-Semana_server[[1]][,1]
   
