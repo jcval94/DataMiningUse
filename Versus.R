@@ -40,9 +40,12 @@ Versus<-function(df,var1=names(df)[1],var2=names(df)[2],
   }
   
   
-  ifelse(length(unique(v$Var1))<=length(unique(v$Var2)),
-         c(xt<-unique(v$Var1),var<-"Var1",vir<-"Var2"),
-         c(xt<-unique(v$Var2),var<-"Var2",vir<-"Var1"))
+  if(length(unique(v$Var1))<=length(unique(v$Var2))){
+    xt<-unique(v$Var1);var<-"Var1";vir<-"Var2"
+  }else{
+    xt<-unique(v$Var2);var<-"Var2";vir<-"Var1"
+  }
+  
   list<-list()
   #var = la variable con mens valores
   for (i in 1:length(xt)) {
@@ -78,4 +81,8 @@ Versus<-function(df,var1=names(df)[1],var2=names(df)[2],
 
 #data(iris)
 
+
+data(iris)
+
+VS<-Versus(df = iris,var1 = "Species",var2 = "Sepal.Length",plot = T)
 
