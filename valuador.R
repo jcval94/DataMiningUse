@@ -23,25 +23,35 @@ Valuador<-function(vars=c("q","shape1","shape2"),
   
   fijos<-length(parametros_int)
   
-  valores<-parametros_int
-  for(i in 1:length(parametros_int)){
-    p_i<-parametros_int[[i]]
-    valores[[i]]<-seq(p_i[1],p_i[2],length.out = puntos_valuar[i])
-  }
+  #Debe hacer un número de fors igual al número de combinaciones posibles
+  #Sin embargo, lo solucionamos con el comango extra.grid
   
-  e.grid<-as.data.frame(expand.grid(valores))
+  e.grid<-as.data.frame(expand.grid(parametros_int))
   
   ####################
   #Se deben separar a las funciones en aquellas graficables y no graficables
+  #A partir de aquí separamos los caminos si la función generó algún error
   
-  e.grid[["Y"]]<-fun(e.grid[[1]],e.grid[[2]],e.grid[[3]])
+  #La primera forma es que los parámetros estén ordenados y sean 3
+  #A modo de ejemplo se encuentra la siguiente línea
+  
+  #e.grid[["Y"]]<-fun(e.grid[[1]],e.grid[[2]],e.grid[[3]])
+  
+  #Sin embargo, se debe generalizar para cualquier número de parámetros en cualquier orden posible
+  #Por ello es indispensable valuar la función cambiando sus parámetros mediante
+  #la función formals
+  
+  #Obtendremos la posición de los parámetros mediante:
+  Posicion<-(1:length(eq_param))[eq_param]
+  #Y obtendremos el número de parámetros a reemplazar
+  NP_REMP<-SUM(eq_param)
   
   for(i in vars_a_cambiar){
     #Aquí empieza el proceso de parametrización y cambios de la variable
     #Fijamos 1 parametro
     n<-n+1
     fun()
-    valores
+    parametros_int
     
     formals(fun)[i]<-parametros_int
     
@@ -51,16 +61,6 @@ Valuador<-function(vars=c("q","shape1","shape2"),
     
   }
   
-  
-  Param_vac
-  
-  #aplicar map a cada parámetro de la función
-  
-  N_param=length(vars)
-  
-  for(i in 1:N_param){
-    fun
-  }
   
   
 }
