@@ -42,3 +42,7 @@ ir$W<-"rr"
 
 tail(RBIND(df1=ir,df2=d_1))
 head(RBIND(df1=d_1,df2=ir))
+
+library(data)
+#ejemplo de mala práctica
+RBIND(iris,esoph)
