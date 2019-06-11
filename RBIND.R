@@ -5,11 +5,12 @@ RBIND<-function(df1,df2){
     return(rbind(df1,df2))
   }else{
     mxm<-c(nd1,nd2)!=max(c(nd1,nd2))
+    if(all(mxm==F)){mxm<-c(TRUE,FALSE)}
     dmx<-list(df1,df2)[mxm][[1]]
     dmn<-list(df1,df2)[!mxm][[1]]
     min_ex<-names(dmn)[!names(dmn) %in% names(dmx)]
     max_ex<-names(dmx)[!names(dmx) %in% names(dmn)]
-    if(length(min_ex)==0){
+    if(length(min_ex)+length(max_ex)==0){
       dmn<-cbind(dmn,tibble::as_tibble(matrix(NA,nrow(dmn),c(nd1,nd2)[mxm]-c(nd1,nd2)[!mxm],
                                       dimnames = list(1:nrow(dmn),max_ex))))
     }else{#Csos en donde ambos df tengan otras columnas
@@ -20,9 +21,24 @@ RBIND<-function(df1,df2){
                                       dimnames = list(1:nrow(dmx),min_ex))))
       
     }
-    if(nd1<nd2)#regresarlo en el orden correcto
+    
+    if(nd1<nd2 | mxm[1])#Si el primer argumento es mxm o si tiene menos columnas
       return(rbind(dmx,dmn))
     else
       return(rbind(dmn,dmx))
   }
 }
+
+
+data(iris)
+
+d_1<-iris[1,]
+d_1$Species<-as.character(d_1$Species)
+d_1[1,5]<-"Rse"
+d_1[["Nueva"]]<-c("U")
+
+ir<-iris
+ir$W<-"rr"
+
+tail(RBIND(df1=ir,df2=d_1))
+head(RBIND(df1=d_1,df2=ir))
