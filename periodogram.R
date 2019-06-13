@@ -1,4 +1,4 @@
-periodicidad<-function(df,place=10,fast=TRUE){
+periodicidad<-function(df,place=10,fast=TRUE,pruebas=1000){
   #df es una serie de tiempo ordenada
   #Hacer el proceso máx 3 veces
   ddT<-data.frame(freq=c(),spec=c(),orden=c())
@@ -7,9 +7,9 @@ periodicidad<-function(df,place=10,fast=TRUE){
   #La propuesta es usar intervalos aleatorios distintos
   #De lo contrario se tardará mucho
   repp<-length(ords)
-  if(repp>1000 & fast){
+  if(repp>pruebas & fast){
     #Se reducirá a 1000
-    ords<-sort(sample(x = ords,size = 1000))
+    ords<-sort(sample(x = ords,size = pruebas))
   }
   for(i in 1:2){
     for(lu in ords){
@@ -52,3 +52,6 @@ df<-LPP2005REC
 #Tomar en cuenta que el tiempo para series mayor a 1000 datos es 20 segs.
 periodicidad(df,place = 10)
 # place es la cantidad de frecuencias que serán tomadas en cuenta para calcular
+
+#En caso de tomar falso el factor de velocidad, habrá menos casos pero será más exacta (sólo se aplica para valores mayores a un valor X)
+periodicidad(df,place = 10,F,pruebas=500)
