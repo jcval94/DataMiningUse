@@ -1,12 +1,20 @@
-periodicidad<-function(df,place=10){
+periodicidad<-function(df,place=10,fast=TRUE){
   #df es una serie de tiempo ordenada
-  #Hacer el proceso m�x 3 veces
+  #Hacer el proceso máx 3 veces
   ddT<-data.frame(freq=c(),spec=c(),orden=c())
+  #Desde el .3 hasta el final
   ords<-floor(length(df)*.3):length(df)
+  #La propuesta es usar intervalos aleatorios distintos
+  #De lo contrario se tardará mucho
+  repp<-length(ords)
+  if(repp>1000 & fast){
+    #Se reducirá a 1000
+    ords<-sort(sample(x = ords,size = 1000))
+  }
   for(i in 1:2){
     for(lu in ords){
       if(i==1){
-        #Se identifica estacionalidad semanal si la hay
+        #Se identifica estacionalidad si la hay
         p<-TSA::periodogram(df[1:lu],plot=F)
       }
       else if (i==2){
@@ -24,13 +32,23 @@ periodicidad<-function(df,place=10){
   
   ddT<-ddT[order(-ddT$spec),]
   Maxi<-max(ddT$spec)
-  #Una periodicidad menor a 3 obs es sospechosa para un periodo anual
+  #Una periodicidad menor a 3 obs es sospechosa para un periodo
   ddT<-ddT[ddT$orden>2,]
-  ddT<-head(ddT,20)
-  ddT$Freq_Orden<-paste0(ddT$freq,"_",ddT$orden)
-  ddT<-suppressWarnings(dcast(ddT,Freq_Orden~.,max,value.var="spec"))
-  ddT$.<-ddT$./Maxi
-  ddT<-ddT[order(-ddT$.),]
+  dd_Top<-head(ddT,30)
+  #Opciones distintas
+  dd_Top$Freq_Orden<-paste0(dd_Top$freq,"_",dd_Top$orden)
+  dd_Top<-suppressWarnings(reshape2::dcast(dd_Top,Freq_Orden~.,max,value.var="spec"))
+  dd_Top$.<-dd_Top$./Maxi
+  dd_Top<-dd_Top[order(-dd_Top$.),]
   
-  return(list(unique(as.numeric(do.call("rbind",strsplit(ddT$Freq_Orden,"_"))[,1])),ddT))
+  return(list(unique(as.numeric(do.call("rbind",strsplit(dd_Top$Freq_Orden,"_"))[,1])),dd_Top))
 }
+
+
+#library()
+library(timeSeries)
+data(LPP2005REC)
+df<-LPP2005REC
+#Tomar en cuenta que el tiempo para series mayor a 1000 datos es 20 segs.
+periodicidad(df,place = 10)
+# place es la cantidad de frecuencias que serán tomadas en cuenta para calcular
