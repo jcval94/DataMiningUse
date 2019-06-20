@@ -35,3 +35,9 @@ iris[["A"]]<-0
 head(iris)
 
 head(drop.df(iris))
+
+#Functions to modify Data frames
+
+data(iris)
+Transpose<-dft(iris)
+View(Transpose)
