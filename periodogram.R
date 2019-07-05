@@ -35,6 +35,3 @@ df<-LPP2005REC
 #Tomar en cuenta que el tiempo para series mayor a 1000 datos es 20 segs.
 periodicidad(df,place = 10)
 # place es la cantidad de frecuencias que serán tomadas en cuenta para calcular
-
-#En caso de tomar falso el factor de velocidad, habrá menos casos pero será más exacta (sólo se aplica para valores mayores a un valor X)
-periodicidad(df,place = 10,F,pruebas=500)
