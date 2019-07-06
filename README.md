@@ -3,14 +3,17 @@ Usual Functions for Data Mining
 
 #Functions to join Data frames without errors
 
+```{r example}
 data(iris)
-d_1<-iris[,5]
 
+d_1<-iris[,5]
 df2<-d_1
 df1<-rbind(iris,iris)
 
 CBIND(df1,df2)
-
+```
+There is a RBIND version as well
+```{r example}
 data(iris)
 
 d_1<-iris[1,]
@@ -23,21 +26,23 @@ ir$W<-"rr"
 
 tail(RBIND(df1=ir,df2=d_1))
 head(RBIND(df1=d_1,df2=ir))
-
+```
+#Functions to clean Data frames
+```{r example}
 library(data)
 #ejemplo de mala práctica
 RBIND(iris,esoph)
-
-#Functions to clean Data frames
 
 iris[["A"]]<-0
 
 head(iris)
 
 head(drop.df(iris))
+```
 
 #Functions to modify Data frames
-
+```{r example}
 data(iris)
 Transpose<-dft(iris)
 View(Transpose)
+```
