@@ -1,5 +1,5 @@
 reducir.df.row<-function(df,abs=25000,rel){
-  if(max_na>1 | max_na<0){return(NULL)}
+  if(rel>1 | rel<0){return(NULL)}
   if(nrow(df)>abs & missing(rel)){
     return(df[sample(seq_len(nrow(df)), size = abs),])
   }
