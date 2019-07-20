@@ -2,8 +2,7 @@ library(purrr)
 library(assertthat)
 library(readr)
 library(textreadr)
-
-Read_docs<-function(dir=getwd(),text_,deep=2){
+Read_docs<-function(dir=getwd(),text_,deep=2,word_pdf_omit=T){
   
   if(missing(text_)){warning("text_ must have a value");return(invisible())}
   lt<-list.files(dir)
@@ -35,9 +34,9 @@ Read_docs<-function(dir=getwd(),text_,deep=2){
       if(length(tt)>0){
         for(t in 1:length(tt)){
           formato<-strsplit(tt,".",fixed = T)[[1]][2]
-          if(formato=="docx"){
+          if(formato=="docx" & !word_pdf_omit){
             Leer<-try(read_docx(dir_[t]),silent = T)
-          }else if(formato=="pdf"){
+          }else if(formato=="pdf" & !word_pdf_omit){
             Leer<-try(read_pdf(dir_[t])$text,silent = T)
           }else{
             Leer<-try(readChar(, file.info(dir_[t])$size),silent = T)
