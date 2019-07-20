@@ -3,27 +3,30 @@ library(assertthat)
 library(readr)
 library(textreadr)
 
-Read_docs<-function(dir=getwd(),text_){
+Read_docs<-function(dir=getwd(),text_,deep=2){
   
   if(missing(text_)){warning("text_ must have a value");return(invisible())}
   lt<-list.files(dir)
   SPL<-do.call(c,map(lt,~strsplit(.x,".",fixed = TRUE)))
   len<-map_int(SPL,~unlist(length(.x)))
+  SPL<-SPL[len>1]
   
   Reed<-lt[len>1]
+  Reed<-Reed[purrr::map_lgl(SPL,~"R" %in% .x[[2]] | "txt" %in% .x[[2]] | "pdf" %in% .x[[2]])]
+  
+  
   Repeat<-lt[len==1]
   
-  #SPL<-SPL[purrr::map_lgl(SPL,~"R" %in% .x[[2]] | "txt" %in% .x[[2]] | "pdf" %in% .x[[2]])]
-  
+  Doovs<-data.frame(Doc=1,Loc=1,Text=1)[-1,]
   Doov<-data.frame(Doc=1,Loc=1,Text=1)[-1,]
-  if(length(Repeat)>0){
-    
-    for(i in 1:length(txt)){
-      Doov=Read_docs(dir = paste0(dir,"/",Repeat),text_)
+  if(length(Repeat)>0 & deep>1){
+      for(i in 1:length(Repeat)){
+      Doov=rbind(Doov,Read_docs(dir = paste0(dir,"/",Repeat[i]),text_))
+      }
       #Doov<-rbind(Doov,data.frame(Doc=txt[i],Loc=Info[1],Text=Info[2]))
-    }
   }
   if(length(Reed)>0){
+    
     txt<-Reed[endsWith(Reed,".txt") | endsWith(Reed,"R") | endsWith(Reed,"pdf") | endsWith(Reed,"docx") ]
     
     dir_txt<-paste0(dir,"/",txt)
@@ -53,7 +56,6 @@ Read_docs<-function(dir=getwd(),text_){
       }
     }
     
-    Doovs<-data.frame(Doc=1,Loc=1,Text=1)[-1,]
     for(i in 1:length(txt)){
       Info=readd(txt[i],dir_txt[i])
       Doovs<-rbind(Doovs,data.frame(Doc=txt[i],Loc=Info[1],Text=Info[2]))
