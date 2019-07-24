@@ -1,0 +1,84 @@
+\#Functions to join Data frames & vectors without errors
+
+Data to join
+
+``` r
+df2<-iris[,5]
+data.table(head(df2))
+```
+
+    ##        V1
+    ## 1: setosa
+    ## 2: setosa
+    ## 3: setosa
+    ## 4: setosa
+    ## 5: setosa
+    ## 6: setosa
+
+``` r
+df1<-rbind(iris,iris)
+data.table(head(df1))
+```
+
+    ##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+    ## 1:          5.1         3.5          1.4         0.2  setosa
+    ## 2:          4.9         3.0          1.4         0.2  setosa
+    ## 3:          4.7         3.2          1.3         0.2  setosa
+    ## 4:          4.6         3.1          1.5         0.2  setosa
+    ## 5:          5.0         3.6          1.4         0.2  setosa
+    ## 6:          5.4         3.9          1.7         0.4  setosa
+
+We will join a data frame of dim (300,5) with a vector of (150,1)
+
+``` r
+dfc<-suppressWarnings(CBIND(df1,df2))
+head(dfc)
+```
+
+    ##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species  value
+    ## 1          5.1         3.5          1.4         0.2  setosa setosa
+    ## 2          4.9         3.0          1.4         0.2  setosa setosa
+    ## 3          4.7         3.2          1.3         0.2  setosa setosa
+    ## 4          4.6         3.1          1.5         0.2  setosa setosa
+    ## 5          5.0         3.6          1.4         0.2  setosa setosa
+    ## 6          5.4         3.9          1.7         0.4  setosa setosa
+
+There is a RBIND version as well
+
+``` r
+data(iris)
+d_1<-iris[1,]
+d_1$Species<-as.character(d_1$Species)
+d_1[1,5]<-"Rse"
+d_1[["Nueva"]]<-c("U")
+head(d_1)
+```
+
+    ##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species Nueva
+    ## 1          5.1         3.5          1.4         0.2     Rse     U
+
+``` r
+ir<-iris
+ir$W<-"rr"
+head(ir)
+```
+
+    ##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species  W
+    ## 1          5.1         3.5          1.4         0.2  setosa rr
+    ## 2          4.9         3.0          1.4         0.2  setosa rr
+    ## 3          4.7         3.2          1.3         0.2  setosa rr
+    ## 4          4.6         3.1          1.5         0.2  setosa rr
+    ## 5          5.0         3.6          1.4         0.2  setosa rr
+    ## 6          5.4         3.9          1.7         0.4  setosa rr
+
+``` r
+head(RBIND(d_1,ir))
+```
+
+    ##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species Nueva    W
+    ## 1          5.1         3.5          1.4         0.2     Rse     U <NA>
+    ## 2          5.1         3.5          1.4         0.2  setosa  <NA>   rr
+    ## 3          4.9         3.0          1.4         0.2  setosa  <NA>   rr
+    ## 4          4.7         3.2          1.3         0.2  setosa  <NA>   rr
+    ## 5          4.6         3.1          1.5         0.2  setosa  <NA>   rr
+    ## 6          5.0         3.6          1.4         0.2  setosa  <NA>   rr
