@@ -5,15 +5,53 @@ date: "24/7/2019"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+#Functions to join Data frames & vectors without errors
+
+```{r example, echo=FALSE}
+library(data.table)
+suppressPackageStartupMessages(library(tidyverse))
+CBIND<-function(df1,df2){
+  is_df<-purrr::map_lgl(list(df1,df2),is.data.frame)
+  if(any(is_df)){#hay al menos uno que no es df
+    df1<-tibble::as_tibble(df1)
+    df2<-tibble::as_tibble(df2)
+  }
+  nd1<-nrow(df1);nd2<-nrow(df2)
+  if(nd1==nd2){
+    return(cbind(df1,df2))
+  }
+  else{
+    mxm<-c(nd1,nd2)!=max(c(nd1,nd2))
+    dmx<-list(df1,df2)[mxm][[1]]
+    dmn<-list(df1,df2)[!mxm][[1]]
+    
+    df_rw<-c(nd1,nd2)[mxm]-c(nd1,nd2)[!mxm]
+    dmx<-rbind(dmx,tibble::as_tibble(matrix(NA,-df_rw,ncol(dmx),
+                               dimnames = list(rep(NA,-df_rw),names(dmx)))))
+    #a partir de aquí ambos df's tienen las mismas columnas
+  if(is_df[1]){
+    return(cbind(dmn,dmx))
+  }else{
+    return(cbind(dmx,dmn))
+  }
+  }
+}
+data(iris)
+df2<-iris[,5]
+head(df2)
 ```
 
-## R Markdown
+```{r iris, echo=FALSE}
+df1<-rbind(iris,iris)
+data.table(head(df1))
+```
+We will join a data frame of dim (300,5) with a vector of (150,1)
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+```{r cbindtable, echo=FALSE}
+dfc<-suppressWarnings(CBIND(df1,df2))
+data.table(head(dfc))
+```
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
 ```{r cars}
 summary(cars)
