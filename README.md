@@ -3,6 +3,8 @@ Readme
 Jose Carlos
 24/7/2019
 
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
 \#\#Data Mining Use Usual Functions for Data Mining
 
 \#Functions to join Data frames & vectors without errors

@@ -2,9 +2,9 @@
 title: "Readme"
 author: "Jose Carlos"
 date: "24/7/2019"
-output:
-  github_document
+output: rmarkdown::github_document
 ---
+<!-- README.md is generated from README.Rmd. Please edit that file -->
 ##Data Mining Use
 Usual Functions for Data Mining
 
