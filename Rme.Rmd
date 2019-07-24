@@ -6,12 +6,22 @@ output:
   md_document:
     variant: markdown_github
 ---
+##Data Mining Use
+Usual Functions for Data Mining
 
 #Functions to join Data frames & vectors without errors
 
 ```{r example, echo=FALSE}
 library(data.table)
 suppressPackageStartupMessages(library(tidyverse))
+dft<-function(df){
+  if(class(df)%in% "tibble"){Tib<-TRUE}
+  else{Tib<-FALSE}
+  df_1<-as.data.frame(t(df))
+  names(df_1)<-row.names(df)
+  if(Tib){return(dplyr::as_tibble(df_1))}
+  else{return(df_1)}
+}
 CBIND<-function(df1,df2){
   is_df<-purrr::map_lgl(list(df1,df2),is.data.frame)
   if(any(is_df)){#hay al menos uno que no es df
@@ -68,6 +78,10 @@ RBIND<-function(df1,df2){
       return(rbind(dmn,dmx))
   }
 }
+drop.df<-function(df){
+  df[,purrr::map_lgl(df,~length(unique(.x))>1)]
+}
+
 
 data(iris)
 ```
@@ -109,5 +123,22 @@ head(ir)
 head(RBIND(d_1,ir))
 ```
 
+#Functions to clean Data frames
+
+```{r exaewemple}
+iris[["A"]]<-0
+head(iris)
+```
+
+Cleaning process, dropping unused columns
+
+```{r exampaale}
+head(drop.df(iris))
+```
+
+#Functions to modify Data frames
+```{r exa32mple}
+dft(iris)[,1:5]
+```
 
 
