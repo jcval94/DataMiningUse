@@ -3,13 +3,18 @@ Usual Functions for Data Mining
 
 #Functions to join Data frames without errors
 
-```{r example}
+```{r example,  echo=FALSE}
+library(data.table)
 data(iris)
+df2<-iris[,5]
+head(df2)
+```
 
-d_1<-iris[,5]
-df2<-d_1
+```{r example}
 df1<-rbind(iris,iris)
+```
 
+```{r example}
 CBIND(df1,df2)
 ```
 There is a RBIND version as well

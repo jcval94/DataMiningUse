@@ -27,8 +27,6 @@ periodicidad<-function(ts,place=10){
   return(list(unique(as.numeric(do.call("rbind",strsplit(ddT$Freq_Orden,"_"))[,1])),ddT))
 }
 
-
-#library()
 library(timeSeries)
 data(LPP2005REC)
 df<-LPP2005REC
