@@ -70,13 +70,10 @@ Versus<-function(df,var1=names(df)[1],var2=names(df)[2],
     names(df)[2]<-"var2"
     plot_2<-ggplot(df,aes(var1,var2))+
       geom_violin(aes(fill=var1))+
-      geom_boxplot(width = 0.2)
+      geom_boxplot(width = 0.2,alpha=0.2,color="red")
   }
   return(list(porcent,plot_2))
 }
-
-#data(iris)
-
 
 data(iris)
 
