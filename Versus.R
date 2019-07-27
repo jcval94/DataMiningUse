@@ -10,16 +10,16 @@ Versus<-function(df,var1=names(df)[1],var2=names(df)[2],
   #Si cualquier variable tiene un solo valor pierde el entido y brea
   
   if(length(unique(df[,var1]))>min.disc){
-    break()
+    return(invisible())
   }
-  if(NV1 & NV2){#Ambos números
-    
-  }
-  else if((!NV1) & (!NV2)){#Ambos factores
-    
-  }else{
-    
-  }
+  # if(NV1 & NV2){#Ambos números
+  #   
+  # }
+  # else if((!NV1) & (!NV2)){#Ambos factores
+  #   
+  # }else{
+  #   
+  # }
   
   #si es un factor volverla número
   #ifelse(class(df[,var1]) | length(unique(df[,var1]))>50,,)
