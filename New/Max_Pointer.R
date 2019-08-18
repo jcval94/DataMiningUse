@@ -41,6 +41,6 @@ Max_Pointer <- function(df, clasif, date, medida) {
     Alerta[[4]] <- round(Porcent_aumento, 3)
     Alerta
 }
-library(timeSeries)
-data(LPP2005REC)
-Max_Pointer(df = LPP2005REC, clasif, date, medida)
+# library(timeSeries)
+# data(LPP2005REC)
+# Max_Pointer(df = LPP2005REC, clasif, date, medida)

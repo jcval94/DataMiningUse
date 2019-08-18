@@ -1,4 +1,5 @@
 #Quitar comentarios de un archivo
+require(purrr)
 No_comments<-function(dir=getwd(),file){
   if(missing(file)){
     file<-list.files(dir)
